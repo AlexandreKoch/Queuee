@@ -1,0 +1,1 @@
+const cadastroDemanda = require('../negocio/demanda_negocio.js');

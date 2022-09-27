@@ -1,0 +1,1 @@
+const cadastroTarefa = require('../negocio/tarefa_negocio.js');
