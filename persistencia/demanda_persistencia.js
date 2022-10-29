@@ -22,8 +22,8 @@ function inserir(demanda, callback){
     const cliente = new Client(conexao);
     cliente.connect();
 
-    const sql = "INSERT INTO demandas () VALUES ($1, $2, $3, $4) RETURNING *";
-    const values = [demanda.descricao, demadna.coluna2, demanda.coluna3, demanda.coluna4];
+    const sql = "INSERT INTO demanda (solicitante, processo, area, departamento, usuario_chave, dono_do_processo, patrocinador, cd_status, cd_input, saving) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)";
+    const values = [demanda.solicitante, demanda.processo, demanda.area, demanda.departamento, demanda.usuario_chave, demanda.dono_do_processo, demanda.patrocinador, demanda.cd_status, demanda.cd_input, demanda.saving];
 
     cliente.query(sql, values,
         function (err, res){
@@ -44,7 +44,7 @@ function listar(callback){
     const cliente = new Client(conexao)
     cliente.connect()
 
-    const sql = "SELECT * FROM demandas";
+    const sql = "SELECT D.id, D.solicitante, D.processo, D.area, D.departamento, D.usuario_chave, D.dono_do_processo, D.patrocinador, S.descricao AS status, I.descricao AS dado_entrada, D.saving FROM demanda as D LEFT JOIN status s ON D.cd_status = S.id LEFT JOIN tipo_input I ON D.cd_input = I.id";
 
 
     cliente.query(sql,

@@ -11,19 +11,19 @@ app.use(express.urlencoded({ extended: true })) // for parsing application/x-www
 //DEMANDAS - DEMANDAS - DEMANDAS - DEMANDAS - DEMANDAS//
 //====================================================//
 //Inserir
-app.post('/api/demandas', demandaController.inserir);
+app.post('/api/demanda', demandaController.inserir);
 
 //Listar
-app.get('/api/demandas', demandaController.listar);
+app.get('/api/demanda', demandaController.listar);
 
 //BuscarDemandaPorId
-app.get('/api/demandas/:id', demandaController.buscarPorId);
+app.get('/api/demanda/:id', demandaController.buscarPorId);
 
 //Atualizar
-app.put('/api/demandas/:id', demandaController.atualizar);
+app.put('/api/demanda/:id', demandaController.atualizar);
 
 //Deletar
-app.delete('/api/demandas/:id', demandaController.deletar);
+app.delete('/api/demanda/:id', demandaController.deletar);
 
 //==========================================//
 //LISTEN - LISTEN - LISTEN - LISTEN - LISTEN//
