@@ -1,7 +1,7 @@
 const demandaRepositorio = require ('../persistencia/demanda_persistencia.js');
 
 function inserir (demanda, callback){
-    if(!demanda || !demanda.processo){
+    if(!demanda || !demanda.processo || !demanda.gravidade || !demanda.urgencia || !demanda.tendencia || !demanda.ativo){
         const erro = {
             mensagem: "A demanda possui campos obrigatórios não preenchidos.",
             numero: 400

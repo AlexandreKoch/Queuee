@@ -36,12 +36,8 @@ FROM demanda as D
 INSERT INTO demanda (solicitante, processo, area, departamento, usuario_chave, dono_do_processo, patrocinador, cd_status, cd_input, saving)
 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
 --INSERE GUT
-INSERT INTO gut (
-	cd_demanda
-	, gravidade
-	, urgencia
-	, tendencia)
-VALUES ((SELECT id FROM demanda ORDER BY id DESC LIMIT 1), $1, $2, $3)
+INSERT INTO gut (cd_demanda, gravidade, urgencia, tendencia)
+VALUES ((SELECT demanda.id FROM demanda ORDER BY demanda.id DESC LIMIT 1), $1, $2, $3)
 --INSERE RELAÇÃO ATIVO
 INSERT INTO relacao_ativos (cd_demanda, cd_ativo)
 VALUES ((SELECT id FROM demanda ORDER BY id DESC LIMIT 1), $2)
