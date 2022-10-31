@@ -25,7 +25,7 @@ function atualizar (id, demanda, callback){
         }
         callback(erro, undefined);
     }
-    else if (!demanda || !demanda.descricao){
+    else if (!demanda || !demanda.solicitante){
         const erro = {
             mensagem: "Todos os campos devem ser preenchidos",
             numero: 400
