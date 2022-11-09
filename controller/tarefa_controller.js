@@ -17,8 +17,8 @@ exports.inserir = (req,res) => {
 
 //LISTAR TAREFAS
 exports.listar = (req,res) => {
-    //res.header("Access-Control-Allow-Origin", "*");
-    cadastroTarefa.listar(function(err, tarefas){
+    const id = req.params.id;
+    cadastroTarefa.listar(id, function(err, tarefas){
         console.log("Listar tarefas: ");
         if(err) {
             res.status(err.numero).json({erro: err.mensagem});

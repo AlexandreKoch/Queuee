@@ -22,8 +22,8 @@ function inserir(tarefa, callback){
     const cliente = new Client(conexao);
     cliente.connect();
 
-    const sql = "INSERT INTO tarefas () VALUES ($1, $2, $3, $4) RETURNING *";
-    const values = [tarefa.descricao, demadna.coluna2, tarefa.coluna3, tarefa.coluna4];
+    const sql = "INSERT INTO tarefa (cd_tipo, cd_complexidade, cd_demanda, descricao) VALUES ($1, $2, $3, $4) RETURNING *;";
+    const values = [tarefa.cd_tipo, demadna.cd_complexidade, tarefa.cd_demanda, tarefa.descricao];
 
     cliente.query(sql, values,
         function (err, res){
@@ -40,14 +40,14 @@ function inserir(tarefa, callback){
 
 
 //LISTAR TAREFA
-function listar(callback){
+function listar(id, callback){
     const cliente = new Client(conexao)
     cliente.connect()
 
-    const sql = "SELECT * FROM tarefas";
+    const sql = "SELECT T.id, T.descricao, T.cd_demanda, TT.descricao tipo, C.descricao complexidade FROM tarefa as T LEFT JOIN complexidade C on T.cd_complexidade = C.id LEFT JOIN tipo_tarefa TT  on T.cd_tipo = TT.id WHERE T.cd_demanda = $1";
+    const values = [id]
 
-
-    cliente.query(sql,
+    cliente.query(sql, values,
         function (err, res){
             if(err){
                 callback(err.message, undefined);

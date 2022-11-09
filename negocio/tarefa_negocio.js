@@ -13,8 +13,18 @@ function inserir (tarefa, callback){
     }
 }
 
-function listar (callback){
-    tarefaRepositorio.listar(callback);
+function listar (id, callback){
+    // if(!cd_demanda || isNaN(cd_demanda)){
+    if(!id || isNaN(id)){
+        const erro = {
+            mensagem: "Identificaro inválido",
+            numero: 400
+        }
+        callback(erro, undefined);
+    }
+    else{
+        tarefaRepositorio.listar(id, callback);
+}
 }
 
 function atualizar (id, tarefa, callback){

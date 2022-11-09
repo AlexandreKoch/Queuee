@@ -102,3 +102,29 @@ VALUES (currval('demanda_id_seq'), 4);
 
 
 UPDATE demanda SET solicitante = 'Não sei', processo = 'Não sei', area = 'Não sei', departamento = 'Não sei', usuario_chave = 'Não sei', dono_do_processo = 'Não sei', patrocinador = 'Não sei', cd_status = 5, cd_input = 1, saving = 10 WHERE id = 5 RETURNING *
+
+--========================================================================================================================
+--========================================================================================================================
+--TAREFAS
+select * from tipo_tarefa
+select * from complexidade
+select * from tarefa
+
+--SELECT
+SELECT T.id
+	, T.descricao
+	, T.cd_demanda
+	, TT.descricao tipo
+	, C.descricao complexidade
+FROM tarefa as T
+LEFT JOIN complexidade C on T.cd_complexidade = C.id
+LEFT JOIN tipo_tarefa TT  on T.cd_tipo = TT.id
+WHERE T.cd_demanda = 2
+
+--INSERT
+INSERT INTO tarefa (cd_tipo, cd_complexidade, cd_demanda, descricao)
+VALUES (4, 3, 2, 'Consultar as solicitações de compras')
+	, (3, 4, 2, 'Analizar a solicitação')
+	, (4, 2, 2, 'Dar o parecer na solicitação');
+
+select * from demanda
