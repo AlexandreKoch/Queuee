@@ -12,6 +12,7 @@ SELECT * FROM tipo_tarefa
 
 -- =============================== DEMANDAS ===============================
 --LISTAR DEMANDAS
+
 SELECT D.id
 	, D.solicitante
 	, D.processo
