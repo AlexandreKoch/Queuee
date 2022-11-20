@@ -25,7 +25,7 @@ function inserir(demanda, callback){
     
     //SQL e Values p/ as 3 tabelas em um único statement 
     //const sql = "INSERT INTO demanda (solicitante, processo, area, departamento, usuario_chave, dono_do_processo, patrocinador, cd_status, cd_input, saving) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10); INSERT INTO gut (cd_demanda, gravidade, urgencia, tendencia) VALUES (currval('demanda_id_seq'), $11, $12, $13); INSERT INTO relacao_ativos (cd_demanda, cd_ativo) VALUES (currval('demanda_id_seq'), $14)";
-    //const values = [demanda.solicitante, demanda.processo, demanda.area, demanda.departamento, demanda.usuario_chave, demanda.dono_do_processo, demanda.patrocinador, demanda.cd_status, demanda.cd_input, demanda.saving, demanda.gravidade, demanda.urgencia, demanda.tendencia, demanda.ativo];
+    //const values = [demanda.solicitante, demanda.processo, demanda.area, demanda.departamento, demanda.usuario_chave, demanda.dono_do_processo, demanda.patrocinador, demanda.cd_status, demanda.cd_input, demanda.saving, demanda.gravidade, demanda.urgencia, demanda.tendencia, demanda.cd_ativo];
 
     const sql_D = "INSERT INTO demanda (solicitante, processo, area, departamento, usuario_chave, dono_do_processo, patrocinador, cd_status, cd_input, saving) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10);";
     const values_D = [demanda.solicitante, demanda.processo, demanda.area, demanda.departamento, demanda.usuario_chave, demanda.dono_do_processo, demanda.patrocinador, demanda.cd_status, demanda.cd_input, demanda.saving];
@@ -33,8 +33,8 @@ function inserir(demanda, callback){
     const sql_G = "INSERT INTO gut (cd_demanda, gravidade, urgencia, tendencia) VALUES (currval('demanda_id_seq'), $1, $2, $3);";
     const values_G = [demanda.gravidade, demanda.urgencia, demanda.tendencia];
 
-    const sql_A = "INSERT INTO relacao_ativos (cd_demanda, cd_ativo) VALUES (currval('demanda_id_seq'), $1)";
-    const values_A = [demanda.ativo];
+    const sql_A = "INSERT INTO relacao_ativos (cd_demanda, cd_ativo) VALUES (currval('demanda_id_seq'), $1) RETURNING cd_demanda";
+    const values_A = [demanda.cd_ativo];
 
     cliente.query(sql_D, values_D,
         function (err, res){
@@ -43,7 +43,8 @@ function inserir(demanda, callback){
                 callback(erroBD, undefined)
             }
             else{
-                callback(undefined, res.rows[0])
+                console.log(res.rows[0])
+                // callback(undefined, res.rows[0])
             }
             //cliente.end()
         })
@@ -55,7 +56,8 @@ function inserir(demanda, callback){
                 callback(erroBD, undefined)
             }
             else{
-                callback(undefined, res.rows[0])
+                console.log(res.rows[0])
+                // callback(undefined, res.rows[0])
             }
             //cliente.end()
         })
@@ -67,6 +69,7 @@ function inserir(demanda, callback){
                 callback(erroBD, undefined)
             }
             else{
+                console.log(res.rows[0])
                 callback(undefined, res.rows[0])
             }
             cliente.end()
@@ -108,7 +111,7 @@ function atualizar (id, demanda, callback){
     const values_G = [id, demanda.gravidade, demanda.urgencia, demanda.tendencia];
 
     const sql_A = "UPDATE relacao_ativos SET cd_demanda = $1, cd_ativo = $2 WHERE cd_demanda = $1 RETURNING *";
-    const values_A = [id, demanda.ativo];
+    const values_A = [id, demanda.cd_ativo];
 
     let resDemanda = []
 

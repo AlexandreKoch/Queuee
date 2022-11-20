@@ -23,7 +23,7 @@ function inserir(tarefa, callback){
     cliente.connect();
 
     const sql = "INSERT INTO tarefa (cd_tipo, cd_complexidade, cd_demanda, descricao) VALUES ($1, $2, $3, $4) RETURNING *;";
-    const values = [tarefa.cd_tipo, demadna.cd_complexidade, tarefa.cd_demanda, tarefa.descricao];
+    const values = [tarefa.cd_tipo, tarefa.cd_complexidade, tarefa.cd_demanda, tarefa.descricao];
 
     cliente.query(sql, values,
         function (err, res){
@@ -66,8 +66,8 @@ function atualizar (id, tarefa, callback){
     const cliente = new Client(conexao);
     cliente.connect();
 
-    const sql = "UPDATE tarefas SET descricao = $2 WHERE id = $1 RETURNING *"
-    const values = [id, tarefa.descricao]
+    const sql = "UPDATE tarefa SET cd_tipo = $2, cd_complexidade = $3, cd_demanda = $4, descricao = $5 WHERE id = $1 RETURNING *"
+    const values = [id, tarefa.cd_tipo, tarefa.cd_complexidade, tarefa.cd_demanda, tarefa.descricao]
 
     cliente.query(sql, values,
         function (err, res){
@@ -92,7 +92,7 @@ function buscarPorId(id, callback) {
     const cliente = new Client(conexao);
     cliente.connect();
     
-    const sql = "SELECT * FROM tarefas WHERE id = $1";
+    const sql = "SELECT * FROM tarefa WHERE id = $1";
     const values = [id];
 
     cliente.query(sql, values,
@@ -118,7 +118,7 @@ function deletar(id, callback) {
     const cliente = new Client(conexao);
     cliente.connect();
     
-    const sql = "DELETE FROM tarefas WHERE id = $1 RETURNING *";
+    const sql = "DELETE FROM tarefa WHERE id = $1 RETURNING *";
     const values = [id];
 
     cliente.query(sql, values,
