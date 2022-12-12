@@ -13,8 +13,25 @@ function inserir (demanda, callback){
     }
 }
 
-function listar (callback){
-    demandaRepositorio.listar(callback);
+function listar (idOrder, callback){
+    let statement
+    if (idOrder == 1){
+        console.log('Msg_2.5 SAVING')
+        statement = "SELECT D.id, D.solicitante, D.processo, D.area, D.departamento, D.usuario_chave, D.dono_do_processo, D.patrocinador, S.descricao AS status, I.descricao AS dado_entrada, D.saving, GUT.gravidade * GUT.urgencia * GUT.tendencia AS criticidade FROM demanda as D LEFT JOIN status s ON D.cd_status = S.id LEFT JOIN tipo_input I ON D.cd_input = I.id LEFT JOIN gut GUT ON GUT.cd_demanda = D.id ORDER BY saving DESC"
+    }
+    else if (idOrder == 2){
+        console.log('Msg_2.5 CRITICIDADE')
+        statement = "SELECT D.id, D.solicitante, D.processo, D.area, D.departamento, D.usuario_chave, D.dono_do_processo, D.patrocinador, S.descricao AS status, I.descricao AS dado_entrada, D.saving, GUT.gravidade * GUT.urgencia * GUT.tendencia AS criticidade FROM demanda as D LEFT JOIN status s ON D.cd_status = S.id LEFT JOIN tipo_input I ON D.cd_input = I.id LEFT JOIN gut GUT ON GUT.cd_demanda = D.id ORDER BY criticidade DESC"
+    }
+    else{
+        console.log('Msg_2.5 NEM UM NEM OUTRO')
+        const erro = {
+            mensagem: "Não foi identificado o critério de priorização",
+            numero: 400
+        }
+    }
+    console.log('Msg_3')
+    demandaRepositorio.listar(statement, callback);
 }
 
 function atualizar (id, demanda, callback){

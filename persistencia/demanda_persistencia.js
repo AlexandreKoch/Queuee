@@ -5,6 +5,11 @@ const erroBD = {
     numero: 500
 };
 
+const erroSELECT = {
+    mensagem: "Query inconsistente",
+    numero: 000
+}
+
 const erroDemandaNaoEncontrada = {
     mensagem: "Demanda nao encontrada",
     numero:404
@@ -78,19 +83,20 @@ function inserir(demanda, callback){
 }
 
 //LISTAR DEMANDA
-function listar(callback){
+function listar(statement, callback){
     const cliente = new Client(conexao)
     cliente.connect()
 
-    const sql = "SELECT D.id, D.solicitante, D.processo, D.area, D.departamento, D.usuario_chave, D.dono_do_processo, D.patrocinador, S.descricao AS status, I.descricao AS dado_entrada, D.saving, GUT.gravidade * GUT.urgencia * GUT.tendencia AS criticidade FROM demanda as D LEFT JOIN status s ON D.cd_status = S.id LEFT JOIN tipo_input I ON D.cd_input = I.id LEFT JOIN gut GUT ON GUT.cd_demanda = D.id";
-
+    const sql = statement;
 
     cliente.query(sql,
         function (err, res){
             if(err){
-                callback(err.message, undefined);
+                console.log('Msg_4')
+                callback(erroSELECT, undefined);
             }
             else{
+                console.log('Msg_5')
                 let demandas = res.rows;
                 callback(undefined, demandas)
             }

@@ -17,13 +17,15 @@ exports.inserir = (req,res) => {
 
 //LISTAR DEMANDAS
 exports.listar = (req,res) => {
-    //res.header("Access-Control-Allow-Origin", "*");
-    cadastroDemanda.listar(function(err, demandas){
+    const idOrder = req.params.id;
+    cadastroDemanda.listar(idOrder, function(err, demandas){
         console.log("Listar demandas: ");
         if(err) {
+            console.log('Msg_1')
             res.status(err.numero).json({erro: err.mensagem});
         }
         else{
+            console.log('Msg_2')
             res.json(demandas);
         }
     });

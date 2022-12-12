@@ -15,8 +15,9 @@ app.use(cors())
 //Inserir
 app.post('/api/demanda', demandaController.inserir);
 
-//Listar
-app.get('/api/demanda', demandaController.listar);
+//Listar ##################
+//#########################
+app.get('/api/listaDemanda/:id', demandaController.listar);
 
 //BuscarDemandaPorId
 app.get('/api/demanda/:id', demandaController.buscarPorId);
